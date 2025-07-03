@@ -9,10 +9,12 @@
       font-family: Arial, sans-serif;
       background: #f9f9f9;
       padding: 2rem;
-      max-width: 400px;
+      max-width: 500px;
       margin: auto;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      line-height: 1.5;
+      color: #333;
     }
     label {
       font-weight: bold;
@@ -24,6 +26,7 @@
       padding: 0.5rem;
       margin-top: 0.5rem;
       box-sizing: border-box;
+      font-size: 1rem;
     }
     button {
       margin-top: 1.5rem;
@@ -33,12 +36,50 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      font-size: 1rem;
     }
     .result {
       margin-top: 1.5rem;
       background: #e9f5ff;
       padding: 1rem;
       border-radius: 5px;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    .formulas {
+      margin-top: 2rem;
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 1rem;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      color: #555;
+    }
+    .formulas h3 {
+      margin-top: 0;
+      color: #007bff;
+    }
+    .formula-code {
+      background: #f4f4f4;
+      padding: 0.5rem 0.75rem;
+      font-family: monospace;
+      display: inline-block;
+      border-radius: 3px;
+      margin-top: 0.25rem;
+      margin-bottom: 1rem;
+      color: #222;
+    }
+    .credibility-note {
+      font-style: italic;
+      margin-top: 1rem;
+      color: #444;
+    }
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -54,6 +95,30 @@
   <button onclick="calculateQTc()">Calculate</button>
 
   <div id="output" class="result" style="display:none;"></div>
+
+  <div class="formulas">
+    <h3>Formulas Used</h3>
+    <p>
+      The QT interval varies with heart rate, so correction formulas adjust QT to a standardized rate.
+    </p>
+    <p><strong>RR interval (ms):</strong></p>
+    <div class="formula-code">RR = (60 / Heart Rate) × 1000</div>
+
+    <p><strong>Fridericia correction formula:</strong></p>
+    <div class="formula-code">QTcF = QT ÷ (RR in seconds)<sup>1/3</sup></div>
+
+    <p>
+      Where:<br />
+      - <em>QT</em> = measured QT interval in milliseconds<br />
+      - <em>RR</em> = interval between heartbeats in seconds (calculated from heart rate)
+    </p>
+
+    <p class="credibility-note">
+      The Fridericia formula is widely used in clinical practice for QT correction due to better accuracy over Bazett's formula, especially at higher heart rates. It is recommended by regulatory agencies like the FDA for drug safety evaluations.
+      <br /><br />
+      For more info, see <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3015356/" target="_blank" rel="noopener noreferrer">this NIH article on QT correction</a>.
+    </p>
+  </div>
 
   <script>
     function calculateQTc() {
