@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QTc (Fridericia) Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 2rem;
+      max-width: 400px;
+      margin: auto;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 1rem;
+    }
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    button {
+      margin-top: 1.5rem;
+      padding: 0.75rem;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 1.5rem;
+      background: #e9f5ff;
+      padding: 1rem;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h2>QTc (Fridericia) Calculator</h2>
+
+  <label for="qt">QT interval (ms):</label>
+  <input type="number" id="qt" placeholder="e.g. 400" required>
+
+  <label for="hr">Heart Rate (bpm):</label>
+  <input type="number" id="hr" placeholder="e.g. 75" required>
+
+  <button onclick="calculateQTc()">Calculate</button>
+
+  <div id="output" class="result" style="display:none;"></div>
+
+  <script>
+    function calculateQTc() {
+      const qt = parseFloat(document.getElementById("qt").value);
+      const hr = parseFloat(document.getElementById("hr").value);
+
+      if (!qt || !hr || qt <= 0 || hr <= 0) {
+        alert("Please enter valid numbers for QT and heart rate.");
+        return;
+      }
+
+      const rr = 60 / hr; // RR in seconds
+      const qtcf = qt / Math.cbrt(rr); // Fridericia formula
+
+      const result = `
+        <strong>RR Interval:</strong> ${rr.toFixed(3)} sec<br>
+        <strong>QTc (Fridericia):</strong> ${qtcf.toFixed(0)} ms
+      `;
+      document.getElementById("output").innerHTML = result;
+      document.getElementById("output").style.display = "block";
+    }
+  </script>
+</body>
+</html>
